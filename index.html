@@ -23,37 +23,37 @@
 
         .countdown-card {
             background: white;
-            border-radius: 20px;
-            padding: 40px 50px;
+            border-radius: 15px;
+            padding: 25px 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             text-align: center;
-            max-width: 400px;
+            max-width: 300px;
             width: 100%;
         }
 
         .title {
-            font-size: 1.8em;
+            font-size: 1.3em;
             color: #2c3e50;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-weight: 700;
         }
 
         .subtitle {
             color: #7f8c8d;
-            font-size: 1em;
-            margin-bottom: 30px;
+            font-size: 0.8em;
+            margin-bottom: 20px;
         }
 
         .countdown-items {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .countdown-item {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            padding: 18px 20px;
+            border-radius: 10px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,42 +62,42 @@
         }
 
         .countdown-item:hover {
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
 
         .time-label {
-            font-size: 1em;
+            font-size: 0.85em;
             font-weight: 500;
             text-align: left;
         }
 
         .time-value {
-            font-size: 2.2em;
+            font-size: 1.6em;
             font-weight: 700;
-            min-width: 70px;
+            min-width: 50px;
             text-align: right;
         }
 
         .date-display {
-            margin-top: 25px;
-            padding-top: 25px;
+            margin-top: 18px;
+            padding-top: 18px;
             border-top: 2px solid #ecf0f1;
             color: #7f8c8d;
-            font-size: 0.9em;
+            font-size: 0.75em;
         }
 
         .date-display strong {
             color: #2c3e50;
             display: block;
-            margin-top: 5px;
-            font-size: 1.1em;
+            margin-top: 4px;
+            font-size: 1em;
         }
 
         .finished {
-            font-size: 1.8em;
+            font-size: 1.2em;
             color: #667eea;
             font-weight: 700;
-            padding: 40px 20px;
+            padding: 30px 15px;
             animation: celebration 1.5s ease-in-out infinite;
         }
 
@@ -108,23 +108,16 @@
 
         @media (max-width: 400px) {
             .countdown-card {
-                padding: 30px 25px;
+                padding: 20px 25px;
+                max-width: 250px;
             }
 
             .title {
-                font-size: 1.5em;
+                font-size: 1.1em;
             }
 
             .time-value {
-                font-size: 1.8em;
-            }
-
-            .countdown-items {
-                gap: 10px;
-            }
-
-            .countdown-item {
-                padding: 15px;
+                font-size: 1.4em;
             }
         }
     </style>
@@ -155,7 +148,7 @@
 
         <div class="date-display">
             Prüfungsbeginn:
-            <strong>Dienstag, 6. Mai 2026, 9:00 Uhr</strong>
+            <strong>Di, 6. Mai 2026, 9:00</strong>
         </div>
     </div>
 
@@ -168,7 +161,7 @@
 
             if (difference <= 0) {
                 document.getElementById('countdown').innerHTML = 
-                    '<div class="finished">🎉 Viel Erfolg bei der Prüfung! 🎉</div>';
+                    '<div class="finished">🎉 Viel Erfolg! 🎉</div>';
                 return;
             }
 
@@ -184,7 +177,7 @@
         }
 
         updateCountdown();
-        setInterval(updateCountdown, 1000); // Update jede Sekunde
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
