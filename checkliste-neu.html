@@ -154,6 +154,27 @@
 </div>
 
 <script>
+  // Haken laden beim Start
+  function loadChecks() {
+    var saved = localStorage.getItem('checklistProgress');
+    if (saved) {
+      var progress = JSON.parse(saved);
+      document.querySelectorAll('input[type="checkbox"]').forEach(function(cb, index) {
+        cb.checked = progress[index] || false;
+      });
+    }
+  }
+
+  // Haken speichern bei Änderung
+  function saveChecks() {
+    var progress = [];
+    document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+      progress.push(cb.checked);
+    });
+    localStorage.setItem('checklistProgress', JSON.stringify(progress));
+  }
+
+  // Fortschrittsbalken aktualisieren
   function update() {
     [1, 2].forEach(function(g) {
       var boxes = document.querySelectorAll('[data-group="' + g + '"] input[type="checkbox"]');
@@ -163,10 +184,16 @@
       document.getElementById('bar' + g).style.width = pct + '%';
       document.getElementById('label' + g).textContent = checked + ' von ' + boxes.length + ' erledigt (' + pct + '%)';
     });
+    saveChecks();
   }
+
+  // Event-Listener für alle Checkboxen
   document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
     cb.addEventListener('change', update);
   });
+
+  // Beim Laden der Seite
+  loadChecks();
   update();
 </script>
 </body>
