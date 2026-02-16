@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
 <style>
   body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #222; }
   h1 { background: #3a6bc4; color: white; padding: 12px 16px; border-radius: 8px; font-size: 1.2em; margin-top: 30px; }
@@ -17,10 +18,7 @@
   .progress-label { font-size: 0.85em; color: #555; margin-bottom: 4px; }
   ul { margin: 6px 0; padding-left: 20px; }
   li { margin: 4px 0; }
-  .formula { font-size: 1.1em; margin: 10px 0; }
-  .frac { display: inline-block; text-align: center; vertical-align: middle; }
-  .frac .num { display: block; border-bottom: 1px solid #222; padding: 0 4px; }
-  .frac .den { display: block; padding: 0 4px; }
+  .formula { text-align: center; margin: 15px 0; }
 </style>
 </head>
 <body>
@@ -34,68 +32,63 @@
 
 <div class="section" data-group="1">
   <h2>📚 Grundbegriffe</h2>
-  <label><input type="checkbox"> Ich weiß, was eine stetige Zufallsgröße X ist</label>
-  <label><input type="checkbox"> Ich kenne den Begriff <strong>Erwartungswert μ</strong></label>
-  <label><input type="checkbox"> Ich kenne den Begriff <strong>Standardabweichung σ</strong></label>
-  <label><input type="checkbox"> Ich weiß, was N(μ; σ)-verteilt bedeutet</label>
+  <label><input type="checkbox"> Ich weiß, was eine stetige Zufallsgröße \(X\) ist</label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Erwartungswert \(\mu\)</strong></label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Standardabweichung \(\sigma\)</strong></label>
+  <label><input type="checkbox"> Ich weiß, was \(N(\mu;\,\sigma)\)-verteilt bedeutet</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>📐 Dichtefunktion</h2>
   <label><input type="checkbox"> Ich kenne die Formel der Gaußschen Glockenfunktion:</label>
-  <div class="formula" style="text-align: center;">
-    φ(x) = 
-    <span class="frac">
-      <span class="num">1</span>
-      <span class="den">σ√(2π)</span>
-    </span>
-    · e<sup>−<span class="frac" style="font-size: 0.8em;"><span class="num">(x−μ)²</span><span class="den">2σ²</span></span></sup>
+  <div class="formula">
+    \[\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]
   </div>
-  <label><input type="checkbox"> Ich weiß, wo das <strong>Maximum</strong> liegt: x₀ = μ</label>
-  <label><input type="checkbox"> Ich weiß, wo die <strong>Wendestellen</strong> liegen: x₁,₂ = μ ± σ</label>
-  <label><input type="checkbox"> Ich kann den <strong>Maximalwert</strong> berechnen: ≈ 0,4 / σ</label>
+  <label><input type="checkbox"> Ich weiß, wo das <strong>Maximum</strong> liegt: \(x_0 = \mu\)</label>
+  <label><input type="checkbox"> Ich weiß, wo die <strong>Wendestellen</strong> liegen: \(x_{1,2} = \mu \pm \sigma\)</label>
+  <label><input type="checkbox"> Ich kann den <strong>Maximalwert</strong> berechnen: \(\approx \frac{0{,}4}{\sigma}\)</label>
   <label><input type="checkbox"> Ich kann die Glockenkurve skizzieren</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>🔢 Wahrscheinlichkeiten berechnen</h2>
-  <label><input type="checkbox"> Ich weiß: P(a ≤ X ≤ b) = ∫ φ(x) dx (von a bis b)</label>
+  <label><input type="checkbox"> Ich weiß: \(P(a \le X \le b) = \int_a^b \varphi(x)\,dx\)</label>
   <label><input type="checkbox"> Ich kann Wahrscheinlichkeiten am <strong>Graphen ablesen</strong></label>
-  <label><input type="checkbox"> Ich weiß: P(X = a) = 0 (Einzelwert bei stetiger Verteilung)</label>
+  <label><input type="checkbox"> Ich weiß: \(P(X = a) = 0\) (Einzelwert bei stetiger Verteilung)</label>
   <label><input type="checkbox"> Ich kann den <strong>Taschenrechner (WTR)</strong> für Berechnungen nutzen</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>📏 Sigma-Regeln</h2>
-  <label><input type="checkbox"> <strong>1-Sigma-Regel:</strong> P(μ−σ ≤ X ≤ μ+σ) ≈ 0,683</label>
-  <label><input type="checkbox"> <strong>2-Sigma-Regel:</strong> P(μ−2σ ≤ X ≤ μ+2σ) ≈ 0,954</label>
-  <label><input type="checkbox"> <strong>3-Sigma-Regel:</strong> P(μ−3σ ≤ X ≤ μ+3σ) ≈ 0,997</label>
+  <label><input type="checkbox"> <strong>1-Sigma-Regel:</strong> \(P(\mu-\sigma \le X \le \mu+\sigma) \approx 0{,}683\)</label>
+  <label><input type="checkbox"> <strong>2-Sigma-Regel:</strong> \(P(\mu-2\sigma \le X \le \mu+2\sigma) \approx 0{,}954\)</label>
+  <label><input type="checkbox"> <strong>3-Sigma-Regel:</strong> \(P(\mu-3\sigma \le X \le \mu+3\sigma) \approx 0{,}997\)</label>
   <label><input type="checkbox"> Ich kenne die erweiterten Sigma-Regeln:</label>
   <div class="sub">
-    <label><input type="checkbox"> P(μ−1,64σ ≤ X ≤ μ+1,64σ) ≈ 0,90</label>
-    <label><input type="checkbox"> P(μ−1,96σ ≤ X ≤ μ+1,96σ) ≈ 0,95</label>
-    <label><input type="checkbox"> P(μ−2,58σ ≤ X ≤ μ+2,58σ) ≈ 0,99</label>
+    <label><input type="checkbox"> \(P(\mu-1{,}64\sigma \le X \le \mu+1{,}64\sigma) \approx 0{,}90\)</label>
+    <label><input type="checkbox"> \(P(\mu-1{,}96\sigma \le X \le \mu+1{,}96\sigma) \approx 0{,}95\)</label>
+    <label><input type="checkbox"> \(P(\mu-2{,}58\sigma \le X \le \mu+2{,}58\sigma) \approx 0{,}99\)</label>
   </div>
   <label><input type="checkbox"> Ich kann die Sigma-Regeln auf konkrete Beispiele anwenden</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>🎯 Standardnormalverteilung</h2>
-  <label><input type="checkbox"> Ich weiß: Bei μ = 0 und σ = 1 heißt X <strong>standardnormalverteilt</strong></label>
-  <label><input type="checkbox"> Ich kann zwischen N(μ; σ) und der Standardnormalverteilung unterscheiden</label>
+  <label><input type="checkbox"> Ich weiß: Bei \(\mu=0\) und \(\sigma=1\) heißt \(X\) <strong>standardnormalverteilt</strong></label>
+  <label><input type="checkbox"> Ich kann zwischen \(N(\mu;\,\sigma)\) und der Standardnormalverteilung unterscheiden</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>🔍 Intervallgrenzen bestimmen</h2>
-  <label><input type="checkbox"> Ich kann zu einer Wahrscheinlichkeit p die Grenze c bestimmen: P(X ≤ c) = p</label>
+  <label><input type="checkbox"> Ich kann zu einer Wahrscheinlichkeit \(p\) die Grenze \(c\) bestimmen: \(P(X \le c) = p\)</label>
   <label><input type="checkbox"> Ich nutze den WTR für diese Berechnung</label>
   <label><input type="checkbox"> Ich kann Ergebnisse interpretieren und erklären</label>
 </div>
 
 <div class="section" data-group="1">
   <h2>📊 Anwendungsaufgaben</h2>
-  <label><input type="checkbox"> Ich kann konkrete Werte für μ und σ einsetzen (z. B. μ = 10, σ = 3)</label>
-  <label><input type="checkbox"> Ich kann P(a ≤ X ≤ b) für konkrete Werte berechnen</label>
+  <label><input type="checkbox"> Ich kann konkrete Werte für \(\mu\) und \(\sigma\) einsetzen (z. B. \(\mu=10,\;\sigma=3\))</label>
+  <label><input type="checkbox"> Ich kann \(P(a \le X \le b)\) für konkrete Werte berechnen</label>
   <label><input type="checkbox"> Ich kann Symmetrie der Glockenkurve nutzen</label>
   <label><input type="checkbox"> Ich kann Ergebnisse in den Sachkontext einordnen</label>
 </div>
@@ -109,37 +102,37 @@
 
 <div class="section" data-group="2">
   <h2>📚 Grundbegriffe</h2>
-  <label><input type="checkbox"> Ich weiß: f(x) = g(x) / h(x) mit Zähler g(x) und Nenner h(x)</label>
+  <label><input type="checkbox"> Ich weiß: \(f(x) = \frac{g(x)}{h(x)}\) mit Zähler \(g(x)\) und Nenner \(h(x)\)</label>
   <label><input type="checkbox"> Ich kann den <strong>Definitionsbereich</strong> bestimmen (Nullstellen des Nenners ausschließen)</label>
-  <label><input type="checkbox"> Ich kenne den Begriff <strong>Definitionslücke</strong>: x₀ ist Nullstelle von h(x)</label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Definitionslücke</strong>: Stelle \(x_0\) ist Nullstelle von \(h(x)\)</label>
   <label><input type="checkbox"> Ich unterscheide zwischen <strong>hebbarer Lücke</strong> und <strong>Polstelle</strong></label>
 </div>
 
 <div class="section" data-group="2">
   <h2>📏 Senkrechte Asymptoten</h2>
-  <label><input type="checkbox"> Wenn x₀ Nullstelle von h(x) und g(x₀) ≠ 0 → x = x₀ ist senkrechte Asymptote</label>
+  <label><input type="checkbox"> Wenn \(x_0\) Nullstelle von \(h(x)\) und \(g(x_0) \neq 0\) → \(x = x_0\) ist senkrechte Asymptote</label>
   <label><input type="checkbox"> Ich kann senkrechte Asymptoten bestimmen und einzeichnen</label>
-  <label><input type="checkbox"> Ich kann das Verhalten links/rechts der Asymptote beschreiben (→ +∞ oder → −∞)</label>
+  <label><input type="checkbox"> Ich kann das Verhalten links/rechts der Asymptote beschreiben (\(\to +\infty\) oder \(\to -\infty\))</label>
   <div class="example">
-    <strong>Beispiel:</strong> f(x) = 3 / (x−2)² → D = ℝ \ {2}; x = 2 ist senkrechte Asymptote
+    <strong>Beispiel:</strong> \(f(x) = \frac{3}{(x-2)^2}\) → \(D = \mathbb{R}\setminus\{2\}\); \(x = 2\) ist senkrechte Asymptote
   </div>
 </div>
 
 <div class="section" data-group="2">
   <h2>📐 Waagerechte Asymptoten</h2>
-  <label><input type="checkbox"> Ich kenne die drei Fälle:</label>
+  <label><input type="checkbox"> Ich kenne die drei Fälle (\(a, b\) = Koeffizienten der höchsten Potenzen):</label>
   <div class="sub">
-    <label><input type="checkbox"> <strong>Zählergrad &lt; Nennergrad</strong> → y = 0</label>
-    <label><input type="checkbox"> <strong>Zählergrad = Nennergrad</strong> → y = a / b</label>
+    <label><input type="checkbox"> <strong>Zählergrad &lt; Nennergrad</strong> → waagerechte Asymptote \(y = 0\)</label>
+    <label><input type="checkbox"> <strong>Zählergrad = Nennergrad</strong> → waagerechte Asymptote \(y = \frac{a}{b}\)</label>
     <label><input type="checkbox"> <strong>Zählergrad &gt; Nennergrad</strong> → keine waagerechte Asymptote</label>
   </div>
   <label><input type="checkbox"> Ich kann den Grad von Zähler und Nenner bestimmen</label>
   <label><input type="checkbox"> Ich kann waagerechte Asymptoten einzeichnen</label>
   <div class="example">
     <strong>Beispiele:</strong><br>
-    f(x) = 3/(x−2)² → Grad 0 &lt; 2 → y = 0<br><br>
-    g(x) = (3x²+1)/(4x²+x) → gleicher Grad → y = 3/4<br><br>
-    h(x) = (x³+1)/(x²−4) → Zählergrad &gt; Nennergrad → keine waagerechte Asymptote
+    \(f(x) = \frac{3}{(x-2)^2}\) → Zählergrad \(0 <\) Nennergrad \(2\) → \(y = 0\)<br><br>
+    \(g(x) = \frac{3x^2+1}{4x^2+x}\) → Grade gleich → \(y = \frac{3}{4}\)<br><br>
+    \(h(x) = \frac{x^3+1}{x^2-4}\) → Zählergrad \(>\) Nennergrad → keine waagerechte Asymptote
   </div>
 </div>
 
@@ -148,7 +141,7 @@
   <div class="note">
     ⚠️ Bei gebrochen rationalen Funktionen können <strong>alle Analysis-Werkzeuge</strong> gefragt sein:
     <ul>
-      <li><strong>Nullstellen</strong> → Zähler = 0 setzen</li>
+      <li><strong>Nullstellen</strong> → Zähler \(= 0\) setzen</li>
       <li><strong>Ableitungen</strong> → Quotientenregel anwenden</li>
       <li><strong>Kurvendiskussion</strong> → Extrem- und Wendestellen bestimmen</li>
       <li><strong>Grenzwerte</strong> → Verhalten an Asymptoten beschreiben</li>
