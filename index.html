@@ -3,181 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Mathe-Abi</title>
+    <title>Abi-Countdown 2026</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #d4920e 0%, #f2ca40 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 28px 14px 40px;
         }
 
-        .countdown-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        h1 {
             text-align: center;
-            max-width: 300px;
-            width: 100%;
-        }
-
-        .title {
-            font-size: 1.3em;
-            color: #2c3e50;
-            margin-bottom: 3px;
+            color: white;
+            font-size: 1.5em;
             font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 0.8em;
-            margin-bottom: 20px;
+        /* ── Fortschrittsbalken ── */
+        .progress-wrap {
+            max-width: 1100px;
+            margin: 18px auto 14px;
+            background: rgba(0,0,0,0.18);
+            border-radius: 14px;
+            padding: 12px 20px;
         }
 
-        .countdown-items {
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: white;
+            transition: width 0.6s ease;
+        }
+
+        .progress-bar-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.88em;
+            color: #8a6500;
+            pointer-events: none;
+        }
+
+        /* ── 4-column grid ── */
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .columns { grid-template-columns: repeat(2, 1fr); }
+            .col-header { font-size: 1.1em; }
+        }
+        @media (max-width: 520px) {
+            .columns { grid-template-columns: 1fr; }
+            h1 { font-size: 1.25em; }
+            .col-header { font-size: 1em; }
+            .party-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .party-days-badge { align-self: stretch; text-align: center; }
+            .progress-bar-label { font-size: 0.78em; }
+        }
+
+        /* ── Column header ── */
+        .col-header {
+            text-align: center;
+            color: white;
+            font-size: 1.25em;
+            font-weight: 700;
+            margin-bottom: 9px;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            line-height: 1.35;
+            border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 10px;
+            padding: 10px 8px;
+        }
+
+        .col-count {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 1px 8px;
+            font-size: 0.78em;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* ── Card list ── */
+        .exam-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 7px;
         }
 
-        .countdown-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            padding: 12px 15px;
+        /* ── Base card ── */
+        .card {
+            background: white;
+            border-radius: 11px;
+            padding: 10px 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.10);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            color: white;
-            transition: transform 0.2s ease;
+            gap: 9px;
         }
 
-        .countdown-item:hover {
-            transform: translateX(3px);
+        /* ── Done card: positive green style ── */
+        .card.done {
+            background: #f0faf3;
+            border-left: 3px solid #4caf7d;
         }
 
-        .time-label {
-            font-size: 0.85em;
-            font-weight: 500;
-            text-align: left;
+        .card.done .card-name { color: #2d6a4a; }
+        .card.done .card-date { color: #6aab88; }
+
+        /* ── Next-card ── */
+        .card.next {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 13px 14px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.16);
         }
 
-        .time-value {
-            font-size: 1.6em;
+        .card-icon { font-size: 1.25em; flex-shrink: 0; line-height: 1; }
+
+        .card-info { flex: 1; min-width: 0; }
+
+        .card-name {
             font-weight: 700;
-            min-width: 50px;
+            font-size: 0.86em;
+            color: #2c3e50;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-date { font-size: 0.68em; color: #7f8c8d; margin-top: 2px; }
+
+        /* Days badge */
+        .card-days {
+            font-size: 1.05em;
+            font-weight: 700;
+            color: #d99030;
+            white-space: nowrap;
             text-align: right;
         }
-
-        .date-display {
-            margin-top: 18px;
-            padding-top: 18px;
-            border-top: 2px solid #ecf0f1;
-            color: #7f8c8d;
-            font-size: 0.75em;
-        }
-
-        .date-display strong {
-            color: #2c3e50;
+        .card-days small {
+            font-size: 0.55em;
+            font-weight: 500;
+            color: #95a5a6;
             display: block;
-            margin-top: 4px;
-            font-size: 1em;
         }
 
-        .finished {
-            font-size: 1.2em;
-            color: #667eea;
+        /* Done checkmark */
+        .card-done-icon {
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        /* ── Next card internals ── */
+        .next-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 9px;
+        }
+
+        .next-badge {
+            font-size: 0.58em;
             font-weight: 700;
-            padding: 30px 15px;
-            animation: celebration 1.5s ease-in-out infinite;
+            background: linear-gradient(135deg, #d99030, #a87018);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 20px;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
         }
 
-        @keyframes celebration {
+        .next-name {
+            font-size: 0.96em;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .next-date { font-size: 0.68em; color: #7f8c8d; margin-top: 1px; }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .countdown-box {
+            background: linear-gradient(135deg, #d99030 0%, #a87018 100%);
+            border-radius: 7px;
+            padding: 7px 3px;
+            text-align: center;
+            color: white;
+        }
+
+        .countdown-box .val {
+            font-size: 1.25em;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .countdown-box .lbl {
+            font-size: 0.58em;
+            opacity: 0.88;
+            margin-top: 2px;
+        }
+
+        /* ── All-done message per column ── */
+        .col-done-msg {
+            background: #f0faf3;
+            border-radius: 11px;
+            padding: 14px 12px;
+            text-align: center;
+            color: #2d6a4a;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50%       { transform: scale(1.02); }
         }
 
-        @media (max-width: 400px) {
-            .countdown-card {
-                padding: 20px 25px;
-                max-width: 250px;
-            }
+        /* ── Party card ── */
+        .party-card {
+            max-width: 1100px;
+            margin: 18px auto 0;
+            background: linear-gradient(135deg, #a88010, #d4aa22);
+            border-radius: 14px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            color: white;
+        }
 
-            .title {
-                font-size: 1.1em;
-            }
+        .party-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
-            .time-value {
-                font-size: 1.4em;
-            }
+        .party-emoji { font-size: 2em; }
+
+        .party-title {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .party-date {
+            font-size: 0.8em;
+            opacity: 0.88;
+            margin-top: 2px;
+        }
+
+        .party-days-badge {
+            font-size: 1.5em;
+            font-weight: 700;
+            white-space: nowrap;
+            background: rgba(255,255,255,0.25);
+            padding: 6px 16px;
+            border-radius: 30px;
         }
     </style>
 </head>
 <body>
-    <div class="countdown-card">
-        <div class="title">📐 Mathe-Abi</div>
-        <div class="subtitle">Noch bis zur Prüfung:</div>
-        
-        <div id="countdown" class="countdown-items">
-            <div class="countdown-item">
-                <span class="time-label">Tage</span>
-                <span class="time-value" id="days">0</span>
-            </div>
-            <div class="countdown-item">
-                <span class="time-label">Stunden</span>
-                <span class="time-value" id="hours">0</span>
-            </div>
-            <div class="countdown-item">
-                <span class="time-label">Minuten</span>
-                <span class="time-value" id="minutes">0</span>
-            </div>
-            <div class="countdown-item">
-                <span class="time-label">Sekunden</span>
-                <span class="time-value" id="seconds">0</span>
-            </div>
-        </div>
 
-        <div class="date-display">
-            Prüfungsbeginn:
-            <strong>Di, 6. Mai 2026, 9:00</strong>
+<h1>Abi-Countdown 2026</h1>
+
+<div class="columns">
+    <div>
+        <div class="col-header">Fachpraktische<br>Prüfungen<br>
+            <span class="col-count" id="count-fp"></span>
+        </div>
+        <div class="exam-list" id="list-fp"></div>
+    </div>
+    <div>
+        <div class="col-header">Schriftliche<br>Prüfungen<br>
+            <span class="col-count" id="count-s"></span>
+        </div>
+        <div class="exam-list" id="list-schriftlich"></div>
+    </div>
+    <div>
+        <div class="col-header">Mündliche<br>Prüfungen<br>
+            <span class="col-count" id="count-m"></span>
+        </div>
+        <div class="exam-list" id="list-muendlich"></div>
+    </div>
+    <div>
+        <div class="col-header">Mündliche<br>Nachprüfungen<br>
+            <span class="col-count" id="count-n"></span>
+        </div>
+        <div class="exam-list" id="list-nach"></div>
+    </div>
+</div>
+
+<div class="progress-wrap">
+    <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+        <div class="progress-bar-label" id="progress-label"></div>
+    </div>
+</div>
+
+<div class="party-card">
+    <div class="party-left">
+        <span class="party-emoji">🥳</span>
+        <div>
+            <div class="party-title">Party machen!</div>
+            <div class="party-date">Freitag, 10. Juli 2026</div>
         </div>
     </div>
+    <div class="party-days-badge" id="party-days"></div>
+</div>
 
-    <script>
-        const targetDate = new Date('2026-05-06T09:00:00');
+<script>
+    const fachpraktisch = [
+        { name: 'Kunst',                  emoji: '🎨', date: new Date('2026-03-06T09:00:00') },
+        { name: 'Komm.-Prüfung Englisch', emoji: '🇬🇧', date: new Date('2026-03-09T09:00:00') },
+    ];
 
-        function updateCountdown() {
-            const now = new Date();
-            const difference = targetDate - now;
+    const schriftlich = [
+        { name: 'Spanisch',        emoji: '🇪🇸', date: new Date('2026-04-20T09:00:00') },
+        { name: 'Kooperations-LK', emoji: '📚',  date: new Date('2026-04-21T09:00:00') },
+        { name: 'Biologie',        emoji: '🧬',  date: new Date('2026-04-22T09:00:00') },
+        { name: 'Deutsch',         emoji: '📝',  date: new Date('2026-04-28T09:00:00') },
+        { name: 'Englisch',        emoji: '🇬🇧', date: new Date('2026-04-30T09:00:00') },
+        { name: 'Mathematik',      emoji: '📐',  date: new Date('2026-05-06T09:00:00') },
+    ];
 
-            if (difference <= 0) {
-                document.getElementById('countdown').innerHTML = 
-                    '<div class="finished">🎉 Viel Erfolg! 🎉</div>';
-                return;
-            }
+    const muendlich = [
+        { name: 'Geschichte',      emoji: '🏛️',  date: new Date('2026-05-19T09:00:00') },
+        { name: 'Englisch',        emoji: '🇬🇧', date: new Date('2026-05-20T09:00:00') },
+        { name: 'Sport',           emoji: '⚽',  date: new Date('2026-05-22T09:00:00') },
+        { name: 'Psychologie',     emoji: '🧠',  date: new Date('2026-06-09T09:00:00') },
+        { name: 'Spanisch',        emoji: '🇪🇸', date: new Date('2026-06-10T09:00:00') },
+        { name: 'Kunst',           emoji: '🎨',  date: new Date('2026-06-11T09:00:00') },
+        { name: 'Spanisch (neu)',  emoji: '🇪🇸', date: new Date('2026-06-15T09:00:00') },
+    ];
 
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    const nachpruefungen = [
+        { name: 'Mündl. Prüfungen', emoji: '🗣️', date: new Date('2026-07-07T09:00:00'), dateLabel: '7.7. – 9.7.2026, 9:00 Uhr' },
+    ];
 
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    const allGroups = [
+        { exams: fachpraktisch,  listId: 'list-fp',         prefix: 'fp', countId: 'count-fp' },
+        { exams: schriftlich,    listId: 'list-schriftlich', prefix: 's',  countId: 'count-s'  },
+        { exams: muendlich,      listId: 'list-muendlich',   prefix: 'm',  countId: 'count-m'  },
+        { exams: nachpruefungen, listId: 'list-nach',        prefix: 'n',  countId: 'count-n'  },
+    ];
+
+    function fmtDate(d, label) {
+        if (label) return label;
+        return d.toLocaleDateString('de-DE', {
+            weekday: 'short', day: 'numeric', month: 'long'
+        }) + ', 9:00 Uhr';
+    }
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function buildList(exams, listId, prefix, countId) {
+        const now     = new Date();
+        const nextIdx = exams.findIndex(e => e.date > now);
+        const doneCount = exams.filter(e => e.date <= now).length;
+        const container = document.getElementById(listId);
+        container.innerHTML = '';
+
+        // Spalten-Zähler
+        document.getElementById(countId).textContent =
+            doneCount === exams.length
+                ? '✓ alle erledigt'
+                : `${doneCount} / ${exams.length} erledigt`;
+
+        // Alle erledigt?
+        if (doneCount === exams.length) {
+            const msg = document.createElement('div');
+            msg.className = 'col-done-msg';
+            msg.textContent = '🎉 Alle geschafft!';
+            container.appendChild(msg);
+            return;
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    </script>
+        exams.forEach((exam, i) => {
+            const diff   = exam.date - now;
+            const done   = diff <= 0;
+            const isNext = i === nextIdx;
+
+            const card = document.createElement('div');
+            card.className = 'card' + (done ? ' done' : '') + (isNext ? ' next' : '');
+            const dateStr = fmtDate(exam.date, exam.dateLabel);
+
+            if (isNext) {
+                const days    = Math.floor(diff / 864e5);
+                const hours   = Math.floor((diff % 864e5) / 36e5);
+                const minutes = Math.floor((diff % 36e5) / 6e4);
+                const seconds = Math.floor((diff % 6e4) / 1e3);
+
+                card.innerHTML = `
+                    <div class="next-header">
+                        <span style="font-size:1.35em">${exam.emoji}</span>
+                        <div style="flex:1;min-width:0">
+                            <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                                <span class="next-name">${exam.name}</span>
+                                <span class="next-badge">NÄCHSTE</span>
+                            </div>
+                            <div class="next-date">${dateStr}</div>
+                        </div>
+                    </div>
+                    <div class="countdown-grid">
+                        <div class="countdown-box"><div class="val" id="${prefix}-d">${days}</div><div class="lbl">Tage</div></div>
+                        <div class="countdown-box"><div class="val" id="${prefix}-h">${pad(hours)}</div><div class="lbl">Std</div></div>
+                        <div class="countdown-box"><div class="val" id="${prefix}-m">${pad(minutes)}</div><div class="lbl">Min</div></div>
+                        <div class="countdown-box"><div class="val" id="${prefix}-s">${pad(seconds)}</div><div class="lbl">Sek</div></div>
+                    </div>`;
+            } else if (done) {
+                card.innerHTML = `
+                    <span class="card-icon">${exam.emoji}</span>
+                    <div class="card-info">
+                        <div class="card-name">${exam.name}</div>
+                        <div class="card-date">${dateStr}</div>
+                    </div>
+                    <span class="card-done-icon">✅</span>`;
+            } else {
+                const daysLeft = Math.ceil(diff / 864e5);
+                card.innerHTML = `
+                    <span class="card-icon">${exam.emoji}</span>
+                    <div class="card-info">
+                        <div class="card-name">${exam.name}</div>
+                        <div class="card-date">${dateStr}</div>
+                    </div>
+                    <div class="card-days">${daysLeft}<small>Tage</small></div>`;
+            }
+
+            container.appendChild(card);
+        });
+    }
+
+    function updateProgress() {
+        const allExams = [...fachpraktisch, ...schriftlich, ...muendlich, ...nachpruefungen];
+        const now      = new Date();
+        const done     = allExams.filter(e => e.date <= now).length;
+        const total    = allExams.length;
+        const pct      = Math.round((done / total) * 100);
+
+        document.getElementById('progress-bar').style.width = pct + '%';
+        document.getElementById('progress-label').textContent =
+            done === total
+                ? '🎉 Alle Prüfungen geschafft!'
+                : `${done} von ${total} Prüfungen erledigt (${pct} %)`;
+    }
+
+    function render() {
+        allGroups.forEach(g => buildList(g.exams, g.listId, g.prefix, g.countId));
+        updateProgress();
+    }
+
+    function tick() {
+        const now = new Date();
+        allGroups.forEach(({ exams, prefix }) => {
+            const next = exams.find(e => e.date > now);
+            if (!next) return;
+            const diff = next.date - now;
+            if (diff <= 0) { render(); return; }
+
+            const d = document.getElementById(prefix + '-d');
+            if (!d) return;
+            d.textContent = Math.floor(diff / 864e5);
+            document.getElementById(prefix + '-h').textContent = pad(Math.floor((diff % 864e5) / 36e5));
+            document.getElementById(prefix + '-m').textContent = pad(Math.floor((diff % 36e5) / 6e4));
+            document.getElementById(prefix + '-s').textContent = pad(Math.floor((diff % 6e4) / 1e3));
+        });
+    }
+
+    render();
+    setInterval(tick, 1000);
+    setInterval(render, 60000);
+
+    // Party countdown
+    function updateParty() {
+        const partyDate = new Date('2026-07-10T00:00:00');
+        const now = new Date();
+        const diff = partyDate - now;
+        const el = document.getElementById('party-days');
+        if (!el) return;
+        if (diff <= 0) {
+            el.innerHTML = '🎉 Es ist so weit!';
+        } else {
+            el.textContent = Math.ceil(diff / 864e5) + ' Tage';
+        }
+    }
+    updateParty();
+    setInterval(updateParty, 60000);
+</script>
 </body>
 </html>
