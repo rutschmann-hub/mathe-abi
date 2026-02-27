@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; color: #222; }
+  h1 { background: #3a6bc4; color: white; padding: 12px 16px; border-radius: 8px; font-size: 1.2em; margin-top: 30px; }
+  h2 { color: #3a6bc4; border-bottom: 2px solid #3a6bc4; padding-bottom: 4px; margin-top: 20px; font-size: 1.05em; }
+  .section { background: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  label { display: flex; align-items: flex-start; gap: 10px; margin: 7px 0; cursor: pointer; line-height: 1.5; }
+  input[type="checkbox"] { margin-top: 3px; min-width: 16px; height: 16px; accent-color: #3a6bc4; cursor: pointer; }
+  .note { background: #fff8e1; border-left: 4px solid #f9a825; padding: 10px 14px; border-radius: 4px; margin: 10px 0; font-size: 0.95em; }
+  .example { background: #e8f4fd; border-left: 4px solid #3a6bc4; padding: 10px 14px; border-radius: 4px; margin: 10px 0; font-size: 0.95em; }
+  .sub { margin-left: 28px; }
+  .progress-bar-container { background: #ddd; border-radius: 10px; height: 12px; margin: 8px 0 2px; }
+  .progress-bar { background: #3a6bc4; height: 12px; border-radius: 10px; transition: width 0.3s; }
+  .progress-label { font-size: 0.85em; color: #555; margin-bottom: 4px; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+</style>
+</head>
+<body>
+
+<h1>✅ Checkliste: Normalverteilung</h1>
+
+<div class="section">
+  <div class="progress-bar-container"><div class="progress-bar" id="bar1" style="width:0%"></div></div>
+  <div class="progress-label" id="label1">0 von 0 erledigt</div>
+</div>
+
+<div class="section" data-group="1">
+  <h2>📚 Grundbegriffe</h2>
+  <label><input type="checkbox"> Ich weiß, was eine stetige Zufallsgröße X ist</label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Erwartungswert μ</strong></label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Standardabweichung σ</strong></label>
+  <label><input type="checkbox"> Ich weiß, was N(μ; σ)-verteilt bedeutet</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>📐 Dichtefunktion</h2>
+  <label><input type="checkbox"> Ich kenne die Formel der Gaußschen Glockenfunktion: φ(x) = 1/(σ·√(2π)) · e^(−(x−μ)²/(2σ²))</label>
+  <label><input type="checkbox"> Ich weiß, wo das <strong>Maximum</strong> liegt: x₀ = μ</label>
+  <label><input type="checkbox"> Ich weiß, wo die <strong>Wendestellen</strong> liegen: x₁,₂ = μ ± σ</label>
+  <label><input type="checkbox"> Ich kann den <strong>Maximalwert</strong> berechnen: ≈ 0,4 / σ</label>
+  <label><input type="checkbox"> Ich kann die Glockenkurve skizzieren</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>🔢 Wahrscheinlichkeiten berechnen</h2>
+  <label><input type="checkbox"> Ich weiß: P(a ≤ X ≤ b) = ∫ φ(x) dx (von a bis b)</label>
+  <label><input type="checkbox"> Ich kann Wahrscheinlichkeiten am <strong>Graphen ablesen</strong></label>
+  <label><input type="checkbox"> Ich weiß: P(X = a) = 0 (Einzelwert bei stetiger Verteilung)</label>
+  <label><input type="checkbox"> Ich kann den <strong>Taschenrechner (WTR)</strong> für Berechnungen nutzen</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>📏 Sigma-Regeln</h2>
+  <label><input type="checkbox"> <strong>1-Sigma-Regel:</strong> P(μ−σ ≤ X ≤ μ+σ) ≈ 0,683</label>
+  <label><input type="checkbox"> <strong>2-Sigma-Regel:</strong> P(μ−2σ ≤ X ≤ μ+2σ) ≈ 0,954</label>
+  <label><input type="checkbox"> <strong>3-Sigma-Regel:</strong> P(μ−3σ ≤ X ≤ μ+3σ) ≈ 0,997</label>
+  <label><input type="checkbox"> Ich kenne die erweiterten Sigma-Regeln:</label>
+  <div class="sub">
+    <label><input type="checkbox"> P(μ−1,64σ ≤ X ≤ μ+1,64σ) ≈ 0,90</label>
+    <label><input type="checkbox"> P(μ−1,96σ ≤ X ≤ μ+1,96σ) ≈ 0,95</label>
+    <label><input type="checkbox"> P(μ−2,58σ ≤ X ≤ μ+2,58σ) ≈ 0,99</label>
+  </div>
+  <label><input type="checkbox"> Ich kann die Sigma-Regeln auf konkrete Beispiele anwenden</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>🎯 Standardnormalverteilung</h2>
+  <label><input type="checkbox"> Ich weiß: Bei μ = 0 und σ = 1 heißt X <strong>standardnormalverteilt</strong></label>
+  <label><input type="checkbox"> Ich kann zwischen N(μ; σ) und der Standardnormalverteilung unterscheiden</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>🔍 Intervallgrenzen bestimmen</h2>
+  <label><input type="checkbox"> Ich kann zu einer Wahrscheinlichkeit p die Grenze c bestimmen: P(X ≤ c) = p</label>
+  <label><input type="checkbox"> Ich nutze den WTR für diese Berechnung</label>
+  <label><input type="checkbox"> Ich kann Ergebnisse interpretieren und erklären</label>
+</div>
+
+<div class="section" data-group="1">
+  <h2>📊 Anwendungsaufgaben</h2>
+  <label><input type="checkbox"> Ich kann konkrete Werte für μ und σ einsetzen (z. B. μ = 10, σ = 3)</label>
+  <label><input type="checkbox"> Ich kann P(a ≤ X ≤ b) für konkrete Werte berechnen</label>
+  <label><input type="checkbox"> Ich kann Symmetrie der Glockenkurve nutzen</label>
+  <label><input type="checkbox"> Ich kann Ergebnisse in den Sachkontext einordnen</label>
+</div>
+
+<h1>✅ Checkliste: Gebrochen rationale Funktionen & Asymptoten</h1>
+
+<div class="section">
+  <div class="progress-bar-container"><div class="progress-bar" id="bar2" style="width:0%"></div></div>
+  <div class="progress-label" id="label2">0 von 0 erledigt</div>
+</div>
+
+<div class="section" data-group="2">
+  <h2>📚 Grundbegriffe</h2>
+  <label><input type="checkbox"> Ich weiß: f(x) = g(x) / h(x) mit Zähler g(x) und Nenner h(x)</label>
+  <label><input type="checkbox"> Ich kann den <strong>Definitionsbereich</strong> bestimmen (Nullstellen des Nenners ausschließen)</label>
+  <label><input type="checkbox"> Ich kenne den Begriff <strong>Definitionslücke</strong>: x₀ ist Nullstelle von h(x)</label>
+  <label><input type="checkbox"> Ich unterscheide zwischen <strong>hebbarer Lücke</strong> und <strong>Polstelle</strong></label>
+</div>
+
+<div class="section" data-group="2">
+  <h2>📏 Senkrechte Asymptoten</h2>
+  <label><input type="checkbox"> Wenn x₀ Nullstelle von h(x) und g(x₀) ≠ 0 → x = x₀ ist senkrechte Asymptote</label>
+  <label><input type="checkbox"> Ich kann senkrechte Asymptoten bestimmen und einzeichnen</label>
+  <label><input type="checkbox"> Ich kann das Verhalten links/rechts der Asymptote beschreiben (→ +∞ oder → −∞)</label>
+  <div class="example">
+    <strong>Beispiel:</strong> f(x) = 3 / (x−2)² → D = ℝ \ {2}; x = 2 ist senkrechte Asymptote
+  </div>
+</div>
+
+<div class="section" data-group="2">
+  <h2>📐 Waagerechte Asymptoten</h2>
+  <label><input type="checkbox"> Ich kenne die drei Fälle:</label>
+  <div class="sub">
+    <label><input type="checkbox"> <strong>Zählergrad &lt; Nennergrad</strong> → y = 0</label>
+    <label><input type="checkbox"> <strong>Zählergrad = Nennergrad</strong> → y = a / b</label>
+    <label><input type="checkbox"> <strong>Zählergrad &gt; Nennergrad</strong> → keine waagerechte Asymptote</label>
+  </div>
+  <label><input type="checkbox"> Ich kann den Grad von Zähler und Nenner bestimmen</label>
+  <label><input type="checkbox"> Ich kann waagerechte Asymptoten einzeichnen</label>
+  <div class="example">
+    <strong>Beispiele:</strong><br>
+    f(x) = 3/(x−2)² → Grad 0 &lt; 2 → y = 0<br><br>
+    g(x) = (3x²+1)/(4x²+x) → gleicher Grad → y = 3/4<br><br>
+    h(x) = (x³+1)/(x²−4) → Zählergrad &gt; Nennergrad → keine waagerechte Asymptote
+  </div>
+</div>
+
+<div class="section" data-group="2">
+  <h2>🔗 Vernetzung mit bisheriger Analysis</h2>
+  <div class="note">
+    ⚠️ Bei gebrochen rationalen Funktionen können <strong>alle Analysis-Werkzeuge</strong> gefragt sein:
+    <ul>
+      <li><strong>Nullstellen</strong> → Zähler = 0 setzen</li>
+      <li><strong>Ableitungen</strong> → Quotientenregel anwenden</li>
+      <li><strong>Kurvendiskussion</strong> → Extrem- und Wendestellen bestimmen</li>
+      <li><strong>Grenzwerte</strong> → Verhalten an Asymptoten beschreiben</li>
+      <li><strong>Integral</strong> → Flächen berechnen (Achtung: Definitionslücken!)</li>
+    </ul>
+  </div>
+  <label><input type="checkbox"> Ich kann die Quotientenregel anwenden</label>
+  <label><input type="checkbox"> Ich kann Nullstellen des Zählers bestimmen</label>
+  <label><input type="checkbox"> Ich beachte Definitionslücken bei der Integralrechnung</label>
+</div>
+
+<script>
+  function update() {
+    [1, 2].forEach(function(g) {
+      var boxes = document.querySelectorAll('[data-group="' + g + '"] input[type="checkbox"]');
+      var checked = 0;
+      boxes.forEach(function(b) { if (b.checked) checked++; });
+      var pct = boxes.length ? Math.round(checked / boxes.length * 100) : 0;
+      document.getElementById('bar' + g).style.width = pct + '%';
+      document.getElementById('label' + g).textContent = checked + ' von ' + boxes.length + ' erledigt (' + pct + '%)';
+    });
+  }
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', update);
+  });
+  update();
+</script>
+</body>
+</html>
