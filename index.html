@@ -9,32 +9,37 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #d4920e 0%, #f2ca40 100%);
+            background:
+                linear-gradient(rgba(120, 78, 8, 0.10), rgba(120, 78, 8, 0.10)),
+                linear-gradient(135deg, #d9a226 0%, #efc958 100%);
             min-height: 100vh;
             padding: 28px 14px 40px;
         }
 
+        .hero-card {
+            max-width: 1100px;
+            margin: 0 auto 14px;
+            background: rgba(0,0,0,0.20);
+            border: 2px solid rgba(255,255,255,0.45);
+            border-radius: 14px;
+            padding: 10px 16px 14px;
+        }
+
         h1 {
             text-align: center;
-            width: fit-content;
-            margin: 0 auto 18px;
-            padding: 8px 16px;
+            margin: 0 0 10px;
             color: white;
             font-size: 1.5em;
             font-weight: 700;
-            border: 2px solid rgba(255,255,255,0.65);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.08);
             text-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         /* ── Fortschrittsbalken ── */
         .progress-wrap {
-            max-width: 1100px;
-            margin: 18px auto 14px;
-            background: rgba(0,0,0,0.18);
-            border-radius: 14px;
-            padding: 12px 20px;
+            margin: 0;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
         }
 
         .progress-bar-bg {
@@ -60,7 +65,7 @@
             justify-content: center;
             font-weight: 700;
             font-size: 0.88em;
-            color: #8a6500;
+            color: #865f00;
             pointer-events: none;
         }
 
@@ -84,6 +89,7 @@
         @media (max-width: 520px) {
             .columns { grid-template-columns: 1fr; }
             h1 { font-size: 1.25em; }
+            .hero-card { padding: 8px 12px 12px; }
             .col-header { font-size: 1em; }
             .party-card { flex-direction: column; align-items: flex-start; gap: 10px; }
             .party-days-badge { align-self: stretch; text-align: center; }
@@ -103,7 +109,14 @@
             border: 2px solid rgba(255,255,255,0.6);
             border-radius: 10px;
             padding: 10px 8px;
+            background: rgba(255,255,255,0.12);
+            border-top-width: 4px;
         }
+
+        .columns > div:nth-child(1) .col-header { border-top-color: #ffe08a; }
+        .columns > div:nth-child(2) .col-header { border-top-color: #9cd1ff; }
+        .columns > div:nth-child(3) .col-header { border-top-color: #98e0b3; }
+        .columns > div:nth-child(4) .col-header { border-top-color: #d7b5ff; }
 
         .col-count {
             display: inline-block;
@@ -169,7 +182,7 @@
         .card-days {
             font-size: 1.05em;
             font-weight: 700;
-            color: #d99030;
+            color: #c9871e;
             white-space: nowrap;
             text-align: right;
         }
@@ -197,7 +210,7 @@
         .next-badge {
             font-size: 0.58em;
             font-weight: 700;
-            background: linear-gradient(135deg, #d99030, #a87018);
+            background: linear-gradient(135deg, #d99b33, #b67814);
             color: white;
             padding: 2px 6px;
             border-radius: 20px;
@@ -220,7 +233,7 @@
         }
 
         .countdown-box {
-            background: linear-gradient(135deg, #d99030 0%, #a87018 100%);
+            background: linear-gradient(135deg, #d99b33 0%, #b67814 100%);
             border-radius: 7px;
             padding: 7px 3px;
             text-align: center;
@@ -261,7 +274,7 @@
         .party-card {
             max-width: 1100px;
             margin: 18px auto 0;
-            background: linear-gradient(135deg, #a88010, #d4aa22);
+            background: linear-gradient(135deg, #a67a15, #cfa43b);
             border-radius: 14px;
             padding: 16px 24px;
             display: flex;
@@ -302,7 +315,15 @@
 </head>
 <body>
 
-<h1>Abi-Countdown 2026</h1>
+<div class="hero-card">
+    <h1>Abi-Countdown 2026</h1>
+    <div class="progress-wrap">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+            <div class="progress-bar-label" id="progress-label"></div>
+        </div>
+    </div>
+</div>
 
 <div class="columns">
     <div>
@@ -328,13 +349,6 @@
             <span class="col-count" id="count-n"></span>
         </div>
         <div class="exam-list" id="list-nach"></div>
-    </div>
-</div>
-
-<div class="progress-wrap">
-    <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
-        <div class="progress-bar-label" id="progress-label"></div>
     </div>
 </div>
 
