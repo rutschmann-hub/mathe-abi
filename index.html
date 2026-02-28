@@ -413,7 +413,12 @@
 
     function buildList(exams, listId, prefix, countId) {
         const now     = new Date();
-        const nextIdx = exams.findIndex(e => e.date > now);
+        const nextExam = exams.reduce((acc, e) => {
+            if (e.date <= now) return acc;
+            if (!acc || e.date < acc.date) return e;
+            return acc;
+        }, null);
+        const nextIdx = nextExam ? exams.indexOf(nextExam) : -1;
         const doneCount = exams.filter(e => e.date <= now).length;
         const container = document.getElementById(listId);
         container.innerHTML = '';
@@ -510,7 +515,11 @@
     function tick() {
         const now = new Date();
         allGroups.forEach(({ exams, prefix }) => {
-            const next = exams.find(e => e.date > now);
+            const next = exams.reduce((acc, e) => {
+                if (e.date <= now) return acc;
+                if (!acc || e.date < acc.date) return e;
+                return acc;
+            }, null);
             if (!next) return;
             const diff = next.date - now;
             if (diff <= 0) { render(); return; }
