@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abitur Wiederholungsplan – Mathe LK 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --ink: #1a1a18;
+    --accent: #c0392b;
+    --accent2: #2c5f8a;
+    --accent3: #27735a;
+    --warn: #e67e22;
+    --muted: #8a8578;
+    --card: #ffffff;
+    --border: #d8d3c8;
+    --ferien: #fdf3f0;
+    --ferien-border: #e8b4a8;
+    --sim: #f0f5fd;
+    --sim-border: #a8bde8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .page { max-width: 860px; margin: 0 auto; }
+  header {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    font-weight: 400;
+  }
+  header h1 span { color: var(--accent); font-style: italic; }
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  .header-meta {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-meta strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 0.2rem;
+  }
+  .countdown {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.2rem 0.6rem;
+    background: var(--card);
+  }
+  .countdown #days { font-weight: 600; color: var(--accent); }
+  /* PROGRESS */
+  .progress-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem 1.1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .progress-label {
+    font-size: 0.73rem;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent3);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-pct {
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: var(--accent3);
+    min-width: 2.8rem;
+    text-align: right;
+  }
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  /* WEEK */
+  .week {
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.4s ease both;
+  }
+  .week:nth-child(1) { animation-delay: 0.05s; }
+  .week:nth-child(2) { animation-delay: 0.10s; }
+  .week:nth-child(3) { animation-delay: 0.15s; }
+  .week:nth-child(4) { animation-delay: 0.20s; }
+  .week:nth-child(5) { animation-delay: 0.25s; }
+  .week:nth-child(6) { animation-delay: 0.30s; }
+  .week:nth-child(7) { animation-delay: 0.35s; }
+  .week:nth-child(8) { animation-delay: 0.40s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .week-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .kw-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--border);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+  }
+  .week-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+  .subject-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.5rem;
+    border-radius: 2px;
+    margin-left: auto;
+  }
+  .tag-analysis { background: #fde8e8; color: #8b1a1a; }
+  .tag-geo      { background: #e8eef8; color: #1a3a5c; }
+  .tag-stoch    { background: #e8f4ee; color: #1a4a30; }
+  /* SESSIONS */
+  .sessions {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .session {
+    display: grid;
+    grid-template-columns: 90px 55px 1fr 44px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .session:last-child { border-bottom: none; }
+  .session:hover { background: #fafaf7; }
+  .session.cancelled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .session.done .session-date,
+  .session.done .session-min,
+  .session.done .session-topic { opacity: 0.35; }
+  .session-date {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .session-date .day {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--muted);
+    display: block;
+  }
+  .session-min {
+    padding: 0.65rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: center;
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .session-topic {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    color: var(--ink);
+    transition: opacity 0.2s;
+  }
+  .session-topic .sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+  /* CHECKBOX CELL */
+  .session-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--border);
+    padding: 0.65rem 0;
+    height: 100%;
+  }
+  .session-check input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+    background: white;
+    flex-shrink: 0;
+  }
+  .session-check input[type="checkbox"]:hover { border-color: var(--accent3); }
+  .session-check input[type="checkbox"]:checked {
+    background: var(--accent3);
+    border-color: var(--accent3);
+  }
+  .session-check input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+  .sessions.analysis { border-left: 3px solid var(--accent); }
+  .sessions.geo      { border-left: 3px solid var(--accent2); }
+  .sessions.stoch    { border-left: 3px solid var(--accent3); }
+  .sessions.mixed    { border-left: 3px solid var(--warn); }
+  /* SPECIAL */
+  .special-block {
+    border-radius: 4px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .special-block.ferien {
+    background: var(--ferien);
+    border: 1px solid var(--ferien-border);
+    border-left: 3px solid var(--accent);
+  }
+  .special-block.simulation {
+    background: var(--sim);
+    border: 1px solid var(--sim-border);
+    border-left: 3px solid var(--accent2);
+  }
+  .special-block.abitur {
+    background: #1a1a18;
+    color: white;
+    border: none;
+    border-left: 3px solid var(--accent);
+  }
+  .special-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+  .special-content h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .special-content p { font-size: 0.82rem; opacity: 0.75; }
+  .special-block.abitur .special-content p { opacity: 0.6; }
+  /* SUMMARY */
+  .summary {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .summary-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+  }
+  .summary-card .label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .summary-card .value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .summary-card .unit { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+  footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Mathe <span>Abitur</span><br>Wiederholungsplan</h1>
+    <div class="header-right">
+      <div class="header-meta">
+        Leistungskurs · BaWü
+        <strong>März – Mai 2026</strong>
+        Mi 45' · Do 90' · Fr 90'
+      </div>
+      <div class="countdown"><span id="days">–</span> Tage bis zur Prüfung</div>
+    </div>
+  </header>
+  <div class="progress-wrap">
+    <span class="progress-label">Fortschritt</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0 %</span>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#c0392b"></div> Analysis</div>
+    <div class="legend-item"><div class="dot" style="background:#2c5f8a"></div> Analytische Geometrie</div>
+    <div class="legend-item"><div class="dot" style="background:#27735a"></div> Stochastik</div>
+    <div class="legend-item"><div class="dot" style="background:#e67e22"></div> Gemischt / Final</div>
+  </div>
+  <!-- KW 10 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 10</span>
+      <span class="week-title">Analytische Geometrie I</span>
+      <span class="subject-tag tag-geo">Geometrie</span>
+    </div>
+    <div class="sessions geo">
+      <div class="session" id="s1">
+        <div class="session-date"><span class="day">Mi</span>04.03.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Vektoren<div class="sub">Rechenoperationen, Betrag, Skalarprodukt</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s1"></div>
+      </div>
+      <div class="session" id="s2">
+        <div class="session-date"><span class="day">Do</span>05.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Geraden<div class="sub">Parameterdarstellung, Lagebeziehungen</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s2"></div>
+      </div>
+      <div class="session" id="s3">
+        <div class="session-date"><span class="day">Fr</span>06.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Ebenen I<div class="sub">Normalenform, Parameterform, Koordinatenform</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s3"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 11 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 11</span>
+      <span class="week-title">Analytische Geometrie II</span>
+      <span class="subject-tag tag-geo">Geometrie</span>
+    </div>
+    <div class="sessions geo">
+      <div class="session" id="s4">
+        <div class="session-date"><span class="day">Mi</span>11.03.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Ebenen II<div class="sub">Lagebeziehungen Ebene/Gerade, Schnittmengen</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s4"></div>
+      </div>
+      <div class="session" id="s5">
+        <div class="session-date"><span class="day">Do</span>12.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Abstände &amp; Winkel<div class="sub">Punkt-Ebene-Abstand, Winkelberechnung</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s5"></div>
+      </div>
+      <div class="session" id="s6">
+        <div class="session-date"><span class="day">Fr</span>13.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Gemischte Prüfungsaufgaben<div class="sub">Analytische Geometrie im Abiturformat</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s6"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 12 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 12</span>
+      <span class="week-title">Analysis: Ableitungen &amp; Kurvendiskussion</span>
+      <span class="subject-tag tag-analysis">Analysis</span>
+    </div>
+    <div class="sessions analysis">
+      <div class="session" id="s7">
+        <div class="session-date"><span class="day">Mi</span>18.03.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Ableitungsregeln<div class="sub">Produkt-, Ketten-, Quotientenregel</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s7"></div>
+      </div>
+      <div class="session" id="s8">
+        <div class="session-date"><span class="day">Do</span>19.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Kurvendiskussion I<div class="sub">Nullstellen, Extrema, Monotonie</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s8"></div>
+      </div>
+      <div class="session" id="s9">
+        <div class="session-date"><span class="day">Fr</span>20.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Kurvendiskussion II<div class="sub">Wendepunkte, Krümmung, Symmetrie</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s9"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 13 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 13</span>
+      <span class="week-title">Analysis: Integralrechnung</span>
+      <span class="subject-tag tag-analysis">Analysis</span>
+    </div>
+    <div class="sessions analysis">
+      <div class="session" id="s10">
+        <div class="session-date"><span class="day">Mi</span>25.03.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Stammfunktionen<div class="sub">Unbestimmtes Integral, Grundregeln</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s10"></div>
+      </div>
+      <div class="session" id="s11">
+        <div class="session-date"><span class="day">Do</span>26.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Bestimmtes Integral<div class="sub">Flächenberechnung, Hauptsatz</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s11"></div>
+      </div>
+      <div class="session" id="s12">
+        <div class="session-date"><span class="day">Fr</span>27.03.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Flächen &amp; Rotationskörper<div class="sub">Flächen zwischen Kurven, Volumen</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s12"></div>
+      </div>
+    </div>
+  </div>
+  <!-- OSTERFERIEN -->
+  <div class="special-block ferien">
+    <div class="special-icon">⛔</div>
+    <div class="special-content">
+      <h3>Osterferien – 30. März bis 11. April 2026</h3>
+      <p>Kein regulärer Unterricht</p>
+    </div>
+  </div>
+  <!-- SIMULATION -->
+  <div class="special-block simulation">
+    <div class="special-icon">📝</div>
+    <div class="special-content">
+      <h3>Prüfungssimulation – Mi, 8. April 2026 <em>(in den Osterferien)</em></h3>
+      <p>Komplette Simulation der Abiturprüfung des Vorjahres unter echten Bedingungen · Zeitlimit · Auswertung &amp; Besprechung im Anschluss</p>
+    </div>
+  </div>
+  <!-- KW 15 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 15</span>
+      <span class="week-title">Analysis: Besondere Funktionen &amp; Prüfungsaufgaben</span>
+      <span class="subject-tag tag-analysis">Analysis</span>
+    </div>
+    <div class="sessions analysis">
+      <div class="session" id="s13">
+        <div class="session-date"><span class="day">Mi</span>15.04.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">e-Funktion &amp; ln<div class="sub">Eigenschaften, Ableitungen, Anwendungen</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s13"></div>
+      </div>
+      <div class="session" id="s14">
+        <div class="session-date"><span class="day">Do</span>16.04.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Gebrochen-rationale Funktionen<div class="sub">Asymptoten, Definitionslücken, Verhalten</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s14"></div>
+      </div>
+      <div class="session" id="s15">
+        <div class="session-date"><span class="day">Fr</span>17.04.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Gemischte Prüfungsaufgaben Analysis<div class="sub">Aufgaben im Abiturformat</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s15"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 16 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 16</span>
+      <span class="week-title">Stochastik I</span>
+      <span class="subject-tag tag-stoch">Stochastik</span>
+    </div>
+    <div class="sessions stoch">
+      <div class="session" id="s16">
+        <div class="session-date"><span class="day">Mi</span>22.04.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Grundlagen Wahrscheinlichkeit<div class="sub">Laplace, bedingte Wahrscheinlichkeit, Vierfeldertafel</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s16"></div>
+      </div>
+      <div class="session" id="s17">
+        <div class="session-date"><span class="day">Do</span>23.04.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Binomialverteilung<div class="sub">B(n;p), Erwartungswert, Varianz, kumulierte WS</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s17"></div>
+      </div>
+      <div class="session" id="s18">
+        <div class="session-date"><span class="day">Fr</span>24.04.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Hypothesentests<div class="sub">Einseitig, zweiseitig, Fehler 1. und 2. Art</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s18"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 17 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 17</span>
+      <span class="week-title">Stochastik II</span>
+      <span class="subject-tag tag-stoch">Stochastik</span>
+    </div>
+    <div class="sessions stoch">
+      <div class="session" id="s19">
+        <div class="session-date"><span class="day">Mi</span>29.04.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Normalverteilung<div class="sub">Gauß, Standardisierung, Tabellenwerte</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s19"></div>
+      </div>
+      <div class="session" id="s20">
+        <div class="session-date"><span class="day">Do</span>30.04.</div>
+        <div class="session-min">90 min</div>
+        <div class="session-topic">Gemischte Prüfungsaufgaben Stochastik<div class="sub">Aufgaben im Abiturformat</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s20"></div>
+      </div>
+      <div class="session cancelled">
+        <div class="session-date"><span class="day">Fr</span>01.05.</div>
+        <div class="session-min">—</div>
+        <div class="session-topic">Tag der Arbeit – schulfrei</div>
+        <div class="session-check"></div>
+      </div>
+    </div>
+  </div>
+  <!-- KW 18 -->
+  <div class="week">
+    <div class="week-header">
+      <span class="kw-label">KW 18</span>
+      <span class="week-title">Finales Prüfungstraining</span>
+      <span class="subject-tag" style="background:#fff3e0;color:#7a4500;">Final</span>
+    </div>
+    <div class="sessions mixed">
+      <div class="session" id="s21">
+        <div class="session-date"><span class="day">Mi</span>05.05.</div>
+        <div class="session-min">45 min</div>
+        <div class="session-topic">Schnelldurchlauf alle drei Gebiete<div class="sub">Offene Fragen klären, letzte Tipps &amp; Formeln</div></div>
+        <div class="session-check"><input type="checkbox" data-id="s21"></div>
+      </div>
+    </div>
+  </div>
+  <!-- ABITUR -->
+  <div class="special-block abitur">
+    <div class="special-icon">🎓</div>
+    <div class="special-content">
+      <h3>ABITURPRÜFUNG MATHEMATIK – Mi, 6. Mai 2026</h3>
+      <p>Viel Erfolg!</p>
+    </div>
+  </div>
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="summary-card">
+      <div class="label">Unterrichtswochen</div>
+      <div class="value">7</div>
+      <div class="unit">KW 10–18</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Unterrichtstage</div>
+      <div class="value">20</div>
+      <div class="unit">excl. Feiertage &amp; Ferien</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Gesamtzeit</div>
+      <div class="value">720</div>
+      <div class="unit">Minuten Unterricht</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Pro Themenblock</div>
+      <div class="value">~225</div>
+      <div class="unit">min je Gebiet</div>
+    </div>
+  </div>
+  <footer>
+    Mathe LK · Baden-Württemberg · Schuljahr 2025/26 · Prüfungsdatum 06.05.2026
+  </footer>
+</div>
+<script>
+  // Countdown
+  const exam = new Date('2026-05-06T08:00:00');
+  const diff = Math.ceil((exam - new Date()) / (1000 * 60 * 60 * 24));
+  document.getElementById('days').textContent = diff > 0 ? diff : '🎓';
+  // Checkboxes + LocalStorage
+  const TOTAL = 21;
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][data-id]');
+  function updateProgress() {
+    const checked = [...checkboxes].filter(cb => cb.checked).length;
+    const pct = Math.round((checked / TOTAL) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + ' %';
+  }
+  function applyDone(cb) {
+    const row = document.getElementById(cb.dataset.id);
+    if (row) row.classList.toggle('done', cb.checked);
+  }
+  checkboxes.forEach(cb => {
+    if (localStorage.getItem('abitur-' + cb.dataset.id) === 'true') {
+      cb.checked = true;
+      applyDone(cb);
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem('abitur-' + cb.dataset.id, cb.checked);
+      applyDone(cb);
+      updateProgress();
+    });
+  });
+  updateProgress();
+</script>
+</body>
+</html>
